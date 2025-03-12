@@ -37,7 +37,9 @@ public class CrossSiteScriptingLesson1 extends AssignmentEndpoint {
   public AttackResult completed(
       @RequestParam(value = "checkboxAttack1", required = false) String checkboxValue) {
     if (checkboxValue != null) {
-      return success(this).build();
+        // Encode the input before using it
+      String safeValue = Encode.forHtml(checkboxValue);
+      return success(this).feedback(safeValue).build();
     } else {
       return failed(this).feedback("xss.lesson1.failure").build();
     }
